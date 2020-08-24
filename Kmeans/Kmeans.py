@@ -1,5 +1,3 @@
-__authors__ = ['1493112','1392437', '1420576']
-__group__ = 'DL.15'
 
 import numpy as np
 import utils
@@ -9,21 +7,11 @@ import random
 class KMeans:
 
     def __init__(self, X, K=1, options=None):
-        """
-         Constructor of KMeans class
-             Args:
-                 K (int): Number of cluster
-                 options (dict): dictºionary with options
-            """
+      
         self.num_iter = 0
         self.K = K
         self._init_X(X)
-        self._init_options(options)  # DICT options
-
-    #############################################################
-    ##  THIS FUNCTION CAN BE MODIFIED FROM THIS POINT, if needed
-    #############################################################
-
+        self._init_options(options) 
 
 
 
@@ -31,25 +19,19 @@ class KMeans:
 
     def _init_X(self, X):
 
-        #self.X = np.random.rand(100, 5)
-        # Assegurem que tots els valors siguin del tipus float
         np.dtype(float)
         rows =len(X)
         colum= len(X[-1])
-      #  print(rows,colum)
+
         N = rows * colum
-        #condició
+        
         if X.ndim > 2:
-            #s'ha de modificar el reshape per que no funciona
+            
             self.X = np.reshape(X,(N ,X.shape[-1]))
 
 
     def _init_options(self, options=None):
-        """
-        Initialization of options in case some fields are left undefined
-        Args:
-            options (dict): dictionary with options
-        """
+       
         if options == None:
             options = {}
         if not 'km_init' in options:
@@ -63,28 +45,19 @@ class KMeans:
         if not 'fitting' in options:
             options['fitting'] = 'WCD'  #within class distance.
 
-        # If your methods need any other prameter you can add it to the options dictionary
+    
         self.options = options
-
-        #############################################################
-        ##  THIS FUNCTION CAN BE MODIFIED FROM THIS POINT, if needed
-        #############################################################
-
-
 
 
     def _init_centroids(self):
 
         if self.options['km_init'].lower() == 'first':
-            #u devuelve una matriz ordenada por columnas X
-            # idx printa els index de cada matriu anteriorment mostrada per u
+
            u,idx=np.unique(self.X,axis=0,return_index=True)
 
            self.centroids= self.X[np.sort(idx)]
            self.centroids= self.centroids[:self.K]
            self.centroids = self.centroids.astype(float)
-
-
 
 
            u,idx=np.unique(self.X,axis=0,return_index=True)
@@ -122,23 +95,18 @@ class KMeans:
             suma = suma/echo.shape[0]
             x = np.append(x,suma, axis=0 )
 
-            #print(x)
             i=i+1
 
         self.centroids = x.reshape(-1,self.X.shape[1])
 
 
-        #print("suma final", self.centroids)
-
+    
 
     def converges(self):
         """
         Checks if there is a difference between current and old centroids
         """
-        #######################################################
-        ##  YOU MUST REMOVE THE REST OF THE CODE OF THIS FUNCTION
-        ##  AND CHANGE FOR YOUR OWN CODE
-        #######################################################
+
         equal = np.array_equal(self.centroids, self.old_centroids)
 
         return equal
@@ -168,14 +136,6 @@ class KMeans:
          returns the whithin class distance of the current clustering
         """
 
-        #######################################################
-        ##  YOU MUST REMOVE THE REST OF THE CODE OF THIS FUNCTION
-        ##  AND CHANGE FOR YOUR OWN CODE
-        #######################################################
-          # Ho estem fent amb init centroids!!!!!!!!!!!!
-
-
-
         sumaTotal = 0
         i=0
         distancias = distance(self.X, self.centroids)
@@ -194,10 +154,7 @@ class KMeans:
         """
          sets the best k anlysing the results up to 'max_K' clusters
         """
-        #######################################################
-        ##  YOU MUST REMOVE THE REST OF THE CODE OF THIS FUNCTION
-        ##  AND CHANGE FOR YOUR OWN CODE
-        #######################################################
+
         anterior = 0
         k = 2
         while k < max_K:
@@ -235,11 +192,6 @@ def distance(X, C):
         i-th point of the first set an the j-th point of the second set
     """
 
-    #########################################################
-    ##  YOU MUST REMOVE THE REST OF THE CODE OF THIS FUNCTION
-    ##  AND CHANGE FOR YOUR OWN CODE
-    #########################################################
-
 
     ma = (X[:, np.newaxis] - C).reshape(-1,X.shape[1])
 
@@ -249,16 +201,7 @@ def distance(X, C):
     ma = ma.reshape(-1,C.shape[0])
 
 
-   # print("esto es bullshit", ma)
     return ma
-
-
-
-
-
-
-
-
 
 def get_colors(centroids):
 
